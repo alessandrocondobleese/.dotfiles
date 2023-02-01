@@ -99,3 +99,13 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Theme
+export TYPEWRITTEN_PROMPT_LAYOUT="pure" 
+export TYPEWRITTEN_SYMBOL="$"
+
+autoload -U promptinit; promptinit
+prompt typewritten
+
+# FNM 
+eval "$(fnm env --use-on-cd)"
