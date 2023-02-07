@@ -1,6 +1,8 @@
 local defaults = {}
 
 function defaults.setup()
+  vim.g.loaded_netrw = 1
+  vim.g.loaded_netrwPlugin = 1
 	-- Indentation
 	vim.opt.expandtab = true
 	vim.opt.shiftwidth = 2
