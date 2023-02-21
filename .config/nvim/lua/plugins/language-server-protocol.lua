@@ -30,34 +30,50 @@ local language_server_protocol = {
 }
 
 local function async_format(bufnr)
-    bufnr = bufnr or vim.api.nvim_get_current_buf()
+	bufnr = bufnr or vim.api.nvim_get_current_buf()
+	vim.lsp.buf_request(
+		bufnr,
+		"textDocument/formatting",
+		vim.lsp.util.make_formatting_params({}),
+		function(err, res, ctx)
+			if err then
+				local err_msg = type(err) == "string" and err or err.message
+				-- you can modify the log message / level (or ignore it completely)
+				vim.notify("Formatting: " .. err_msg, vim.log.levels.WARN)
+				return
+			end
 
-    vim.lsp.buf_request(
-        bufnr,
-        "textDocument/formatting",
-        vim.lsp.util.make_formatting_params({}),
-        function(err, res, ctx)
-            if err then
-                local err_msg = type(err) == "string" and err or err.message
-                -- you can modify the log message / level (or ignore it completely)
-                vim.notify("formatting: " .. err_msg, vim.log.levels.WARN)
-                return
-            end
+			-- don't apply results if buffer is unloaded or has been modified
+			if not vim.api.nvim_buf_is_loaded(bufnr) or vim.api.nvim_buf_get_option(bufnr, "modified") then
+				return
+			end
 
-            -- don't apply results if buffer is unloaded or has been modified
-            if not vim.api.nvim_buf_is_loaded(bufnr) or vim.api.nvim_buf_get_option(bufnr, "modified") then
-                return
-            end
+			if res then
+				local client = vim.lsp.get_client_by_id(ctx.client_id)
+				vim.lsp.util.apply_text_edits(res, bufnr, client and client.offset_encoding or "utf-16")
+				vim.api.nvim_buf_call(bufnr, function()
+					vim.cmd("silent noautocmd update")
+				end)
+			end
+		end
+	)
+end
 
-            if res then
-                local client = vim.lsp.get_client_by_id(ctx.client_id)
-                vim.lsp.util.apply_text_edits(res, bufnr, client and client.offset_encoding or "utf-16")
-                vim.api.nvim_buf_call(bufnr, function()
-                    vim.cmd("silent noautocmd update")
-                end)
-            end
-        end
-    )
+local signs = {
+	DiagnosticSignError = "",
+	DiagnosticSignWarn = "",
+	DiagnosticSignHint = "",
+	DiagnosticSignInfo = "",
+}
+
+function language_server_protocol.config_diagnostics_signs()
+	for sign_name, sign in pairs(signs) do
+		vim.fn.sign_define(sign_name, {
+			text = sign,
+			texthl = sign_name,
+			numhl = sign_name,
+		})
+	end
 end
 
 function language_server_protocol.config()
@@ -65,6 +81,11 @@ function language_server_protocol.config()
 
 	local lsp = require("lsp-zero")
 	lsp.preset("recommended")
+	lsp.setup_nvim_cmp({
+		sources = {
+			{ name = "nvim_lsp", keyword_length = 1 },
+		},
+	})
 	lsp.ensure_installed({
 		"html",
 		"cssls",
@@ -80,7 +101,6 @@ function language_server_protocol.config()
 	null.setup({
 		sources = {
 			null.builtins.code_actions.eslint,
-			null.builtins.completion.spell,
 		},
 		on_attach = function(client, bufnr)
 			null_options.on_attach(client, bufnr)
@@ -109,7 +129,7 @@ function language_server_protocol.config()
 			bufcmd(bufnr, "NullFormat", format_command_callback, {
 				bang = true,
 				range = true,
-				desc = "Format using null-ls",
+				desc = "Formatting",
 			})
 		end,
 	})
@@ -121,6 +141,8 @@ function language_server_protocol.config()
 	})
 
 	require("mason-null-ls").setup_handlers({})
+
+	language_server_protocol.config_diagnostics_signs()
 end
 
 return language_server_protocol

@@ -109,3 +109,16 @@ prompt typewritten
 
 # FNM 
 eval "$(fnm env --use-on-cd)"
+
+# alias work="timer 60m && terminal-notifier -message 'Pomodoro'\
+#       -title 'Work Timer is up! Take a Break 😊'\
+#       -appIcon '~/Pictures/pumpkin.png'\
+#       -sound Crystal"
+# Aliases
+alias work="timer 25m && terminal-notifier -message 'Pomodoro'\
+        -title 'Work Timer is up! Take a Break 😊'\
+        -sound Crystal"
+        
+alias rest="timer 5m && terminal-notifier -message 'Pomodoro'\
+        -title 'Break is over! Get back to work 😬'\
+        -sound Crystal"
