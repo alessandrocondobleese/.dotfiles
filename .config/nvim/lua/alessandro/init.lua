@@ -1,8 +1,5 @@
+local plugin_manager = require "alessandro.plugin-manager"
 
-local keymap = require("alessandro.preferences.keymap") 
-local option = require("alessandro.preferences.option")
-local plugin_manager = require('alessandro.plugins.plugin-manager')
+vim.g.mapleader = " "
 
-keymap:setup()
-option:setup()
-plugin_manager:setup()
+plugin_manager.config()

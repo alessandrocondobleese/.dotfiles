@@ -1,1 +1,0 @@
-require("alessandro.plugins.plugin-manager")
