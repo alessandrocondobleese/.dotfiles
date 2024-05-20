@@ -23,7 +23,6 @@ return {
     local servers = {
       bashls = true,
       lua_ls = true,
-      tsserver = true,
       jsonls = {
         settings = {
           json = {

@@ -2,6 +2,14 @@ local builtin = require "telescope.builtin"
 local telescope = require "telescope"
 
 telescope.setup {
+  defaults = {
+    file_ignore_patterns = {
+      ".metals",
+      ".bloop",
+      "ammonite",
+      "metals.sbt",
+    },
+  },
   extensions = {
     fzf = {},
     wrap_results = true,
