@@ -21,6 +21,7 @@ return {
 
     local lspconfig = require "lspconfig"
     local servers = {
+      tsserver = true,
       bashls = true,
       lua_ls = true,
       jsonls = {
@@ -88,5 +89,7 @@ return {
         }
       end,
     })
+
+    vim.lsp.inlay_hint.enable()
   end,
 }

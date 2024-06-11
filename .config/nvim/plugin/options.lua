@@ -74,10 +74,13 @@ vim.cmd [[highlight SpellBad cterm=undercurl gui=undercurl]]
 -- Plugin and Additional Features
 -- Disable the default Netrw file explorer plugin
 vim.g.loaded_netrw = 1
--- Disable additional Netrw plugin features
+-- Disable additional Netrw plugin feature
 vim.g.loaded_netrwPlugin = 1
 
 --
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 --
 vim.opt.shortmess:append "c"
+---
+vim.opt.splitbelow = true
+vim.opt.splitright = true
