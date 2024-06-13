@@ -1,8 +1,10 @@
 return {
   "neovim/nvim-lspconfig",
+  event = { "BufReadPost", "BufNewFile" },
   dependencies = {
     -- NVIM local development
-    "folke/neodev.nvim",
+    { "folke/lazydev.nvim", ft = "lua", opts = {} },
+    --
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -12,8 +14,6 @@ return {
     "b0o/SchemaStore.nvim",
   },
   config = function()
-    require("neodev").setup {}
-
     local capabilities = nil
     if pcall(require, "cmp_nvim_lsp") then
       capabilities = require("cmp_nvim_lsp").default_capabilities()
