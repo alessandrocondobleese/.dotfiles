@@ -12,6 +12,8 @@ return {
     "stevearc/conform.nvim",
     -- JSON Schema information
     "b0o/SchemaStore.nvim",
+    -- Errors
+    { "https://git.sr.ht/~whynothugo/lsp_lines.nvim" },
   },
   config = function()
     local capabilities = nil
@@ -21,6 +23,8 @@ return {
 
     local lspconfig = require "lspconfig"
     local servers = {
+      ruff_lsp = true,
+      pyright = true,
       tsserver = true,
       bashls = true,
       lua_ls = true,
@@ -77,6 +81,7 @@ return {
     require("conform").setup {
       formatters_by_ft = {
         lua = { "stylua" },
+        python = { "ruff_lsp" },
       },
     }
 
@@ -90,6 +95,7 @@ return {
       end,
     })
 
-    vim.lsp.inlay_hint.enable()
+    require("lsp_lines").setup()
+    vim.diagnostic.config { virtual_text = false }
   end,
 }

@@ -19,6 +19,7 @@ return {
         "html",
         "typescript",
         "markdown",
+        "python",
       },
       sync_install = false,
       highlight = { enable = true },

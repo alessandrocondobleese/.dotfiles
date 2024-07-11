@@ -2,7 +2,6 @@ return {
   config = function()
     local lazy_path_hash = "/lazy/lazy.nvim"
     local lazy_path = vim.fn.stdpath "data" .. lazy_path_hash
-    print(lazy_path)
     local lazy_exists = vim.loop.fs_stat(lazy_path)
     if not lazy_exists then
       vim.fn.system {
