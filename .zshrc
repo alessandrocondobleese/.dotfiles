@@ -46,11 +46,29 @@ setopt hist_find_no_dups
 # Alias
 alias ls='ls --color'
 
+
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+eval "$(fnm env --use-on-cd)"
 
 # load oh my posh
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
   eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/ohmyposh.toml)"
 fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/alessandro/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/alessandro/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/alessandro/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/alessandro/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
