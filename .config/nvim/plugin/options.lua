@@ -1,86 +1,98 @@
 -- Enable faster Lua loader using byte-compilation
 vim.loader.enable()
 
--- UI and Visual Enhancements
--- Highlight the column at the 80th character to aid in maintaining line length
-vim.opt.colorcolumn = "80"
--- Highlight the line where the cursor is located for better visibility
-vim.opt.cursorline = true
--- Disable the display of the current mode (e.g., INSERT) at the bottom of the window
-vim.opt.showmode = false
--- Display line numbers on the left side of the window
-vim.opt.number = true
--- Display the cursor's current position in the status line
-vim.opt.ruler = true
--- Show relative line numbers instead of absolute line numbers
-vim.opt.relativenumber = true
--- Customize the width and content of the number column
-vim.opt.numberwidth = 4
--- Enable 24-bit RGB color in the terminal
-vim.opt.termguicolors = true
--- Highlight matching parentheses and other characters
-vim.opt.showmatch = true
+-- Indentation and Text Formatting
+vim.o.expandtab = true -- Use spaces instead of tabs for indentation
+vim.opt.shiftwidth = 2 -- Number of spaces per indentation level
+vim.o.shiftround = true -- Round indent to the nearest multiple of shiftwidth
+vim.opt.tabstop = 2 -- Number of spaces that a tab character represents
+vim.opt.softtabstop = 2 -- Spaces per tab when inserting/deleting
+vim.opt.smartindent = true -- Enable smart indentation
+vim.opt.linebreak = true -- Break lines at whitespace
+vim.opt.breakindent = true -- Maintain indentation on line breaks
+vim.o.breakindentopt = "list:-1" -- Fine-tune break indentation behavior
 
--- Indentation and Text Editing
--- Use spaces instead of tabs for indentation
-vim.opt.expandtab = true
--- Set the number of space characters inserted for indentation
-vim.opt.shiftwidth = 2
--- Set the number of spaces that a tab character represents
-vim.opt.tabstop = 2
--- Set the number of spaces to use for autoindent and tab completion
-vim.opt.softtabstop = 2
--- Enable smart indentation, which adjusts based on the syntax/context
-vim.opt.smartindent = true
--- Enable smooth scrolling for more fluid navigation in documents
-vim.opt.smoothscroll = true
--- Prevent text lines from wrapping around to the next line
-vim.opt.wrap = false
--- Break lines at whitespace characters to avoid broken words at the window's edge
-vim.opt.linebreak = true
--- Maintain the indentation level of a line when it wraps or breaks
-vim.opt.breakindent = true
+-- Clipboard
+vim.opt.clipboard:append "unnamedplus" -- Use system clipboard
 
--- Files and Backup
--- Disable swap file creation to prevent saving temporary state to disk
-vim.opt.swapfile = false
--- Disable backup file creation to prevent generating backup files
-vim.opt.backup = false
--- Set the directory for storing undo history and enable undo files
-vim.opt.undodir = os.getenv "HOME" .. "/.vim/undo"
-vim.opt.undofile = true
+-- UI Enhancements
+vim.o.cursorline = true -- Highlight the cursor line
+vim.opt.cursorlineopt = { "number" } -- Highlight only the number column
+vim.o.colorcolumn = "+0" -- Highlight the 80th character column
+vim.o.foldcolumn = "1" -- Show fold column
+vim.o.foldenable = false -- Disable folding by default
+vim.o.foldlevel = 99 -- Maximum fold level
+vim.o.foldtext = vim.lsp.foldtext() -- Use LSP for fold text
+vim.o.laststatus = 3 -- Global status line
+vim.o.list = true -- Show special characters
+vim.opt.listchars = { nbsp = "␣", tab = "  ", trail = "·" } -- Customize list characters
+vim.o.mouse = "" -- Disable mouse support
+vim.opt.showmode = false -- Hide mode display (redundant with statusline)
+vim.opt.showcmd = false -- Hide command display
+vim.o.wildmode = "longest:full" -- Command-line completion mode
+vim.o.wildoptions = "pum" -- Use popup menu for completion
+vim.o.redrawtime = 150 -- Set redraw time for large files
+vim.o.titlestring = "nvim: %t" -- Window title format
+vim.o.title = true -- Enable window title
+vim.o.splitkeep = "screen" -- Keep split screen position
+vim.o.splitright = true -- New splits appear to the right
+vim.o.splitbelow = true -- New splits appear below
+vim.o.scrolloff = 30 -- Minimum lines above/below cursor
+vim.o.sidescrolloff = 30 -- Minimum columns left/right of cursor
+vim.o.signcolumn = "yes:1" -- Always show sign column
 
--- Search
--- Disable highlighting all search matches
-vim.opt.hlsearch = false
--- Enable incremental search that shows results as you type
-vim.opt.incsearch = true
---
-vim.opt.smartcase = true
---
-vim.opt.ignorecase = true
---
-vim.opt.inccommand = "split"
+-- Cursor Appearance
+vim.opt.guicursor = {
+  "n-sm:block", -- Block cursor in normal/select modes
+  "v:hor50", -- 50% horizontal cursor in visual mode
+  "c-ci-cr-i-ve:ver10", -- Thin vertical cursor in command/insert modes
+  "o-r:hor10", -- Thin horizontal cursor in operator/replacement mode
+  "a:Cursor/Cursor-blinkwait1-blinkon1-blinkoff1", -- Blinking animation
+}
 
--- System Clipboard and External Tools
--- Use system clipboard for copy-paste operations
-vim.opt.clipboard:append "unnamedplus"
--- Terminal cursor shape settings
-vim.cmd [[let &t_Cs = "\e[4:3m"]] -- Start cursor shape
-vim.cmd [[let &t_Ce = "\e[4:0m"]] -- End cursor shape
--- Highlight spelling errors with an underline
-vim.cmd [[highlight SpellBad cterm=undercurl gui=undercurl]]
+-- Window Separators and Fill Characters
+vim.opt.fillchars = {
+  eob = " ",
+  diff = "╱",
+  fold = " ",
+  foldsep = " ",
+  msgsep = "━",
+  horiz = "━",
+  horizup = "┻",
+  horizdown = "┳",
+  vert = "┃",
+  vertleft = "┫",
+  vertright = "┣",
+  verthoriz = "╋",
+}
+
+-- Line Numbers
+vim.opt.number = true -- Show line numbers
+vim.opt.relativenumber = true -- Show relative line numbers
+vim.opt.numberwidth = 3 -- Set width of number column
+
+-- Colors and Visual Effects
+vim.opt.termguicolors = true -- Enable 24-bit RGB color
+vim.opt.showmatch = true -- Highlight matching brackets
+vim.o.pumheight = 15 -- Maximum popup menu height
+
+-- File Handling and Backups
+vim.opt.swapfile = false -- Disable swap files
+vim.opt.backup = false -- Disable backup files
+vim.opt.undodir = os.getenv "HOME" .. "/.vim/undo" -- Undo history directory
+vim.opt.undofile = true -- Enable persistent undo
+
+-- Search Behavior
+vim.opt.hlsearch = false -- Disable highlight search
+vim.opt.incsearch = true -- Enable incremental search
+vim.opt.smartcase = true -- Smart case-sensitive search
+vim.opt.ignorecase = true -- Ignore case in searches unless uppercase is used
+vim.opt.inccommand = "split" -- Show incremental command results in split
 
 -- Plugin and Additional Features
--- Disable the default Netrw file explorer plugin
-vim.g.loaded_netrw = 1
--- Disable additional Netrw plugin feature
-vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1 -- Disable default Netrw file explorer
+vim.g.loaded_netrwPlugin = 1 -- Disable additional Netrw features
+vim.opt.completeopt = { "menu", "menuone", "noselect" } -- Completion menu behavior
+vim.opt.shortmess:append "c" -- Shorten completion messages
 
---
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
---
-vim.opt.shortmess:append "c"
----
-vim.opt.splitbelow = true
-vim.opt.splitright = true
+vim.api.nvim_set_hl(0, "SpellBad", { underline = true })

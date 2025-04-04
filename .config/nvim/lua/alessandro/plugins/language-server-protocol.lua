@@ -12,20 +12,15 @@ return {
     "stevearc/conform.nvim",
     -- JSON Schema information
     "b0o/SchemaStore.nvim",
-    -- Errors
-    { "https://git.sr.ht/~whynothugo/lsp_lines.nvim" },
+
+    "saghen/blink.cmp",
   },
   config = function()
-    local capabilities = nil
-    if pcall(require, "cmp_nvim_lsp") then
-      capabilities = require("cmp_nvim_lsp").default_capabilities()
-    end
-
     local lspconfig = require "lspconfig"
     local servers = {
-      ruff_lsp = true,
+      ruff = true,
       pyright = true,
-      tsserver = true,
+      ts_ls = true,
       bashls = true,
       lua_ls = true,
       jsonls = {
@@ -36,6 +31,7 @@ return {
           },
         },
       },
+      clangd = true,
     }
 
     local servers_to_install = vim.tbl_filter(function(key)
@@ -54,10 +50,8 @@ return {
       if config == true then
         config = {}
       end
-      config = vim.tbl_deep_extend("force", {}, {
-        capabilities = capabilities,
-      }, config)
 
+      config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
       lspconfig[name].setup(config)
     end
 
@@ -95,7 +89,6 @@ return {
       end,
     })
 
-    require("lsp_lines").setup()
-    vim.diagnostic.config { virtual_text = false }
+    vim.diagnostic.config { virtual_lines = true }
   end,
 }
