@@ -1,1 +1,0 @@
-require "alessandro.ui.statusline"
