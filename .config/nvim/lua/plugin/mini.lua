@@ -1,1 +1,2 @@
-return { "echasnovski/mini.basics", version = false, opts = {} }
+---@type MiniBasicsOpts
+return { 'echasnovski/mini.basics', version = false, opts = {} }

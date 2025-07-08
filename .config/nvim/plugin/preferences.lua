@@ -1,125 +1,122 @@
--- Clipboard
---
-vim.opt.clipboard:append("unnamedplus")
--- Usa el portapapeles del sistema (registro +) como portapapeles predeterminado
+---@class Preferences
+local preferences = {}
 
--- UI
---
-vim.o.confirm = true
--- Permite confirmar guardado de cambios antes de cerrar archivos modificados
+--- Sets up Neovim preferences.
+function preferences.setup()
+  -- Clipboard
+  vim.opt.clipboard:append 'unnamedplus'
+  -- Use the system clipboard (register +) as the default clipboard
 
-vim.o.cursorline = true
--- Resalta la línea actual del cursor
+  -- UI
+  vim.o.confirm = true
+  -- Allow confirming changes before closing modified files
 
-vim.opt.cursorlineopt = { "number" }
--- Solo resalta el número de línea en lugar de toda la línea
+  vim.o.cursorline = true
+  -- Highlight the current cursor line
 
-vim.o.modeline = false
-vim.o.modelines = 0
--- Desactiva el uso de modelines (por seguridad)
+  vim.opt.cursorlineopt = { 'number' }
+  -- Only highlight the line number instead of the entire line
 
--- Edit
---
-vim.o.tabstop = 2
---
-vim.o.expandtab = true
--- Convierte tabs en espacios
+  vim.o.modeline = false
+  vim.o.modelines = 0
+  -- Disable modelines (for security)
 
-vim.o.softtabstop = -1
--- Usa el valor de shiftwidth cuando presionas Tab en modo insert
+  -- Edit
+  vim.o.tabstop = 2
+  vim.o.expandtab = true
+  -- Convert tabs to spaces
 
-vim.o.shiftwidth = 0
--- Usa el valor de 'tabstop' como ancho de sangrado
+  vim.o.softtabstop = -1
+  -- Use the value of shiftwidth when pressing Tab in insert mode
 
-vim.o.shiftround = true
--- Ajusta el indentado al múltiplo más cercano de 'shiftwidth'
+  vim.o.shiftwidth = 0
+  -- Use the value of 'tabstop' as indent width
 
-vim.o.virtualedit = "all"
--- Permite mover el cursor a posiciones "vacías", útil en visual block
+  vim.o.shiftround = true
+  -- Adjust indentation to the nearest multiple of 'shiftwidth'
 
--- Splits
---
-vim.o.splitright = true
--- Las ventanas verticales nuevas se abren a la derecha
+  vim.o.virtualedit = 'all'
+  -- Allow moving the cursor to "empty" positions, useful in visual block
 
-vim.o.splitbelow = true
--- Las ventanas horizontales nuevas se abren abajo
+  -- Splits
+  vim.o.splitright = true
+  -- New vertical windows open to the right
 
-vim.o.equalalways = true
--- Siempre iguala el tamaño de ventanas al hacer splits
+  vim.o.splitbelow = true
+  -- New horizontal windows open below
 
-vim.o.splitkeep = "screen"
--- Mantiene la pantalla estable al dividir ventanas
+  vim.o.equalalways = true
+  -- Always equalize window sizes when splitting
 
--- Scroll
---
-vim.o.scrolloff = 30
--- Mínimo de 30 líneas por encima y debajo del cursor
+  vim.o.splitkeep = 'screen'
+  -- Keep the screen stable when splitting windows
 
-vim.o.sidescrolloff = 30
--- Mínimo de 30 columnas a la izquierda y derecha del cursor
+  -- Scroll
+  vim.o.scrolloff = 30
+  -- Minimum of 30 lines above and below the cursor
 
-vim.o.cmdwinheight = 30
--- Altura de la ventana de comandos (:q, etc.)
+  vim.o.sidescrolloff = 30
+  -- Minimum of 30 columns to the left and right of the cursor
 
-vim.o.colorcolumn = "+0"
--- Muestra una columna guía en la posición de 'textwidth' (si está definido)
+  vim.o.cmdwinheight = 30
+  -- Height of the command window (:q, etc.)
 
-vim.o.list = true
--- Muestra caracteres invisibles
+  vim.o.colorcolumn = '+0'
+  -- Show a guide column at 'textwidth' position (if defined)
 
-vim.opt.listchars = {
-  nbsp = "␣", -- Espacio no separable
-  tab = "  ", -- Representación visual del tab
-  trail = "·", -- Espacios al final de la línea
-}
+  vim.o.list = true
+  -- Show invisible characters
 
--- Status lines
---
-vim.o.laststatus = 3
--- Muestra una sola línea de estado global
+  vim.opt.listchars = {
+    nbsp = '␣', -- Non-breaking space
+    tab = '  ', -- Visual representation of tab
+    trail = '·', -- Trailing spaces at the end of the line
+  }
 
-vim.o.showtabline = 1
--- Muestra la línea de pestañas solo si hay varias pestañas
+  -- Status lines
+  vim.o.laststatus = 3
+  -- Show a single global status line
 
-vim.o.showmode = false
--- Oculta mensajes como "-- INSERT --" (útil si usas una barra de estado personalizada)
+  vim.o.showtabline = 1
+  -- Show tab line only if there are multiple tabs
 
-vim.o.showcmd = false
--- No muestra comandos parcialmente escritos en la parte inferior
+  vim.o.showmode = false
+  -- Hide messages like "-- INSERT --" (useful if using a custom status bar)
 
-vim.o.inccommand = "split"
--- Muestra resultado de sustituciones (`:s///`) en tiempo real en una ventana dividida
+  vim.o.showcmd = false
+  -- Do not show partially typed commands at the bottom
 
--- Lines
---
+  vim.o.inccommand = 'split'
+  -- Show substitution results (`:s///`) in real-time in a split window
 
-vim.o.number = true
--- Muestra número de línea absoluto
+  -- Lines
+  vim.o.number = true
+  -- Show absolute line number
 
-vim.o.relativenumber = true
--- Muestra números relativos (útil para navegar con movimientos como `5j`)
+  vim.o.relativenumber = true
+  -- Show relative numbers (useful for navigating with movements like `5j`)
 
-vim.o.numberwidth = 3
--- Ancho mínimo de la columna de números
+  vim.o.numberwidth = 3
+  -- Minimum width of the number column
 
--- Break lines
---
+  -- Break lines
+  vim.o.linebreak = true
+  -- Break lines only at spaces to avoid cutting words
 
-vim.o.linebreak = true
--- Rompe líneas solo en espacios para no cortar palabras
+  vim.o.breakindent = true
+  -- Keep wrapped text indented
 
-vim.o.breakindent = true
--- Mantiene indentado el texto envuelto
+  vim.o.breakindentopt = 'list:-1'
+  -- Adjust indentation behavior for long lines
 
-vim.o.breakindentopt = "list:-1"
--- Ajusta el comportamiento de indentado de líneas largas
+  -- Cursor
+  vim.opt.guicursor = {
+    'n-sm:block', -- Block in normal and select mode
+    'v:hor50', -- Horizontal cursor at 50% in visual mode
+    'c-ci-cr-i-ve:ver10', -- Thin vertical cursor in insert, command, replace, etc.
+    'o-r:hor10', -- Thin horizontal cursor in operator and replace mode
+    'a:Cursor/Cursor-blinkwait1-blinkon1-blinkoff1', -- Custom blinking for all modes
+  }
+end
 
--- Cursor
-vim.opt.guicursor = {
-  "n-sm:block", -- Bloque en modo normal y select
-  "v:hor50", -- Cursor horizontal al 50% en modo visual
-  "c-ci-cr-i-ve:ver10", -- Cursor vertical delgado en insert, command, replace, etc.
-  "o-r:hor10", -- Cursor horizontal delgado en modo operator y replace
-  "a:Cursor/Cursor-blinkwait1-blinkon1-blinkoff1", -- Parpadeo personalizado para todos los modos
-}
+return preferences

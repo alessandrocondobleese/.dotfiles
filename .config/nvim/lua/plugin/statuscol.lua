@@ -1,8 +1,9 @@
+---@type StatuscolOpts
 return {
-  "luukvbaal/statuscol.nvim",
+  'luukvbaal/statuscol.nvim',
+  --- Sets up the statuscol.nvim plugin.
   config = function()
-    -- local builtin = require("statuscol.builtin")
-    require("statuscol").setup({
+    require('statuscol').setup {
       -- configuration goes here, for example:
       relculright = true,
       -- segments = {
@@ -17,6 +18,6 @@ return {
       --     click = "v:lua.ScSa"
       --   },
       -- }
-    })
+    }
   end,
 }

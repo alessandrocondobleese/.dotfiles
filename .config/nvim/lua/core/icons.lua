@@ -1,4 +1,9 @@
+---@class Icons
+---@field icons table<string, string> General icons used throughout the configuration.
+---@field kind_icons table<string, string> Icons representing different LSP kind types.
+
 return {
+  ---@type table<string, string>
   icons = {
     branch = '', --- TX-02
     bullet = '•', --- TX-02
@@ -15,9 +20,22 @@ return {
     error = ' ',
     info = ' ',
   },
+  ---@type table<string, {string, string}>
+  statusline_icons = {
+    branch = { 'DiagnosticOk', '' },
+    file = { 'NonText', '' },
+    fileinfo = { 'DiagnosticInfo', '' },
+    modified = { 'DiagnosticError', '•' },
+    nomodifiable = { 'DiagnosticWarn', '•' },
+    readonly = { 'DiagnosticWarn', '' },
+    error = { 'DiagnosticError', ' ' },
+    warn = { 'DiagnosticWarn', ' ' },
+    visual = { 'DiagnosticInfo', '‹› ' },
+  },
+  ---@type table<string, string>
   kind_icons = {
-    Array = ' 󰅪 ',
-    BlockMappingPair = ' 󰅩  ',
+    Array = ' [] ',
+    BlockMappingPair = ' {} ',
     Boolean = '   ',
     BreakStatement = ' 󰙧  ',
     Call = ' ↗ ', --- TX-02
@@ -31,7 +49,7 @@ return {
     Declaration = ' 󰙠  ',
     Delete = ' 󰩺 ',
     DoStatement = ' 󰑖 ',
-    Element = ' 󰅩  ',
+    Element = ' {} ',
     Enum = '  ',
     EnumMember = '  ',
     Event = ' ',
@@ -57,10 +75,10 @@ return {
     MarkdownH6 = ' 󰉰 ',
     Method = ' 󰆦  ',
     Module = '   ',
-    Namespace = ' 󰅩  ',
+    Namespace = ' {} ',
     Null = ' 󰢤  ',
     Number = ' 󰎠  ',
-    Object = ' 󰅩  ',
+    Object = ' {} ',
     Operator = '   ',
     Package = ' 󰆦  ',
     Pair = ' 󰅪 ',
@@ -69,16 +87,16 @@ return {
     Regex = '  ',
     Repeat = ' 󰑖 ',
     Return = ' 󰌑  ',
-    RuleSet = ' 󰅩  ',
-    Scope = ' 󰅩  ',
-    Section = ' 󰅩  ',
+    RuleSet = ' {} ',
+    Scope = ' {} ',
+    Section = ' {} ',
     Snippet = '   ',
     Specifier = ' 󰦪 ',
-    Statement = ' 󰅩  ',
+    Statement = ' {} ',
     String = '   ',
     Struct = '   ',
     SwitchStatement = '󰺟  ',
-    Table = ' 󰅩  ',
+    Table = ' {} ',
     Terminal = '  ',
     Text = '   ',
     Type = '  ',
